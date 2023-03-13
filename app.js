@@ -1,6 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+
+// using the ejs template
+app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
 
 
@@ -11,14 +14,17 @@ app.get("/", function(res,res){
     console.log(today.toString());
     const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     let day = weekday[today.getDay()];
+    var dayofWeek="";
 
     if(currentDay===6 || currentDay===0)
     {
-        res.sendFile(__dirname+"/index.html");
-    }
+        dayofWeek = day;
+    }    
     else{
-        res.send("I have to work " + day);
+        dayofWeek = day;
     }
+    res.render("list",{KindOfDay:dayofWeek});
+    
     
 });
 
